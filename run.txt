@@ -1,0 +1,50 @@
+Backend Development - Run Guide
+
+1. Navigate to the backend repository
+
+cd ~/Dev/backend-development
+
+
+2. Activate the virtual environment
+
+source .venv/bin/activate
+
+
+3. Navigate to the FastAPI directory
+
+cd fastapi
+
+
+4. Run a FastAPI application
+
+uvicorn hello_api:app --reload
+
+Replace `hello_api` with the filename you want to run.
+
+Examples:
+
+uvicorn get_requests:app --reload
+uvicorn post_request:app --reload
+uvicorn cars_api:app --reload
+uvicorn F1_api:app --reload
+uvicorn CRUD_api:app --reload
+
+
+5. Open the API
+
+http://127.0.0.1:8000
+
+
+6. Open FastAPI's interactive API documentation
+
+http://127.0.0.1:8000/docs
+
+
+7. Stop the server
+
+Ctrl + C
+
+
+8. Deactivate the virtual environment when finished
+
+deactivate
