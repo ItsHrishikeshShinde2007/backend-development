@@ -22,3 +22,34 @@ def get_cars(connection: sqlite3.Connection = Depends(get_db)): ## tells FastAPI
     cars = cursor.fetchall()
     return [dict(car) for car in cars]
     ## This basically retrieves all cars from the database and prints them
+
+@app.get("/cars/{car_id}")
+def get_car(car_id: int, connection: sqlite3.Connection = Depends(get_db)):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM cars WHERE car_id = ?;", (car_id,))
+    
+    car = cursor.fetchone()
+    if car is not None:
+        return dict(car)
+    else:
+        return {"Message": "Car not found."}
+
+@app.post("/cars/new/{car_id}")
+def add_new_car(car: dict, connection: sqlite3.Connection = Depends(get_db)):
+    cursor = connection.cursor()
+    cursor.execute(
+        "INSERT INTO cars (car_id, name, company, type, manufacturing_year, horsepower) VALUES (?, ?, ?, ?, ?, ?);",
+        (car["car_id"], car["name"], car["company"], car["type"], car["manufacturing_year"], car["horsepower"])
+    )
+    connection.commit()
+    return {"message": "New car added successfully.", "car": car}
+
+@app.put("/cars/new/{car_id}")
+def update_car(car_id: int, updated_car: dict, connection: sqlite3.Connection = Depends(get_db)):
+    cursor = connection.cursor()
+    cursor.execute(
+        "UPDATE cars SET name = ?, company = ?, type = ?, manufacturing_year = ?, horsepower = ? WHERE car_id = ?;",
+        (updated_car["name"], updated_car["company"], updated_car["type"], updated_car["manufacturing_year"], updated_car["horsepower"], car_id)
+    )
+    connection.commit()
+    return {"message": "Car updated successfully.", "updated_car": updated_car}
