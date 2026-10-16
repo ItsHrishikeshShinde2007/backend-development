@@ -1,7 +1,20 @@
-import sqlite3
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Depends
+import sqlite3
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5000",
+        "http://127.0.0.1:5000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 DATABASE_URL = "database/backend.db"
 
