@@ -1,10 +1,22 @@
-drivers = [
-    {"name":"Max", 
-     "number":1},
-    {"name":"Charles", 
-     "number":16},
-    {"name":"Fernando", 
-     "number":14}
+Drivers = [
+    {
+        "Driver Name":"Kimi Antonelli",
+        "Car_No":"12",
+        "Team":"Mercedes",
+        "Points":"380"
+    },
+    {
+        "Driver Name":"Max Verstappen",
+        "Car_No":"3",
+        "Team":"Red Bull Racing",
+        "Points":"261"
+    },
+    {
+        "Driver Name":"Lewis Hamilton",
+        "Car_No":"44",
+        "Team":"Scuderia Ferrari",
+        "Points":"259"
+    }
 ]
 
 from fastapi import FastAPI
@@ -12,12 +24,12 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get("/drivers")
-def get_drivers():
-    return drivers
+def all_drivers():
+    return Drivers
 
-@app.get("/drivers/{number}")
-def get_driver_by_number(number: int):
-    for driver in drivers:
-        if driver["number"] == number:
-            return driver
+@app.get("/drivers/{Points}")
+def driver(Points: str):
+    for drivers in Drivers:
+        if drivers["Points"] == Points:
+            return drivers
     return {"error": "Driver not found"}
