@@ -60,13 +60,13 @@ if __name__ == "__main__":
         cursor.execute("SELECT * FROM cars WHERE car_id = 13;")
         updated_car = cursor.fetchone()
 
-        print("Car updated from", old_name, "to", updated_car[1])
+        print("Car updated rom", old_name, "to", updated_car[1])
     else:
         print("Car not found.")
 
-    print("---Final list of all cars---")
+    print("-- These are the list of all the cars --")
     cars = printallcars(cursor)
-    print("The Output of the data table is as follows:")
+    print("So the outout of all the cars in the list is")
     for car in cars:
         print(car)
 
