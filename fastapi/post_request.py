@@ -1,49 +1,57 @@
-laptops = [
+Mods = [
     {
-        "Brand": "Lenovo",
-        "Model": "Legion Pro 7i",
-        "CPU": "Intel Core Ultra 9 275HX",
-        "GPU": "NVIDIA RTX NVIDIA GeForce RTX 5070 Ti (12GB GDDR7)",
-        "Price": 359991
+        "Mod Name":"Twin Screw Supercharger",
+        "Mod Type":"Forced Induction",
+        "Mod Price":550000,
+        "Increase in HP":180,
+        "Increase in Top Speed":28
     },
     {
-        "Brand": "Asus",
-        "Model": "ROG Strix SCAR 16",
-        "CPU": "Intel Core Ultra 9 275HX",
-        "GPU": "NVIDIA RTX NVIDIA GeForce RTX 5090 (24GB GDDR7)",
-        "Price": 449990
+        "Mod Name":"Performance Racing Headers",
+        "Mod Type":"Exhaust System",
+        "Mod Price":120000,
+        "Increase in HP":25,
+        "Increase in Top Speed":5
     },
     {
-        "Brand": "Dell",
-        "Model": "Alienware M18 R2",
-        "CPU": "Intel Core i9-14900HX",
-        "GPU": "NVIDIA RTX NVIDIA GeForce RTX 4090 (16GB GDDR6)",
-        "Price": 513121
+        "Mod Name":"Forged Crankshafts",
+        "Mod Type":"valvetrain",
+        "Mod Price":180000,
+        "Increase in HP":35,
+        "Increase in Top Speed":6
+    },
+    {
+        "Mod Name":"Performance Intake Manifold",
+        "Mod Type":"Air Intake",
+        "Mod Price":110000,
+        "Increase in HP":18,
+        "Increase in Top Speed":3
+    },
+    {
+        "Mod Name":"Roots Supercharger Upgrade",
+        "Mod Type":"Forced Induction",
+        "Mod Price":380000,
+        "Increase in HP":160,
+        "Increase in Top Speed":24
+    },
+    {
+        "Mod Name":"Performance Camshaft",
+        "Mod Type":"Valvetrain",
+        "Mod Price":110000,
+        "Increase in HP":35,
+        "Increase in Top Speed":5
     }
 ]
 
 from fastapi import FastAPI
-from pydantic import BaseModel
 
 app = FastAPI()
 
-class Laptop(BaseModel):
-    Brand: str
-    Model: str
-    CPU: str
-    GPU: str
-    Price: int
+@app.get("/mods")
+def getallmods():
+    return Mods
 
-@app.get("/Laptops")
-def get_laptops():
-    return laptops
-
-@app.post("/Laptops")
-def add_new_laptop(laptop: Laptop):
-    new_laptop = laptop.model_dump()
-    laptops.append(new_laptop)
-
-    return{
-        "message": "New laptop added successfully.",
-        "laptop": new_laptop
-    }
+@app.post("/mods")
+def addanewmod(mod : dict):
+    Mods.append(mod)
+    return {"New Mod added Successfully":"Mod"}
