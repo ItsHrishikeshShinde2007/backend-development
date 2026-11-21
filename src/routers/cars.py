@@ -27,3 +27,16 @@ def get_car(car_id: int, connection: sqlite3.Connection = Depends(get_db)):
         return dict(car)
 
     return {"message": "Car not found."}
+
+@router.post("/cars")
+def add_a_new_car(car: dict, connection: sqlite3.Connection = Depends(get_db)):
+    cursor = connection.cursor()
+
+    cursor.execute(
+        "INSERT INTO cars (car_id, name, company, type, manufacturing_year, horsepower) VALUES (?, ?, ?, ?, ?, ?);",
+        (car["car_id"], car["name"], car["company"], car["type"], car["manufacturing_year"], car["horsepower"]),
+    )
+
+    connection.commit()
+
+    return {"message": "Car added successfully."}
